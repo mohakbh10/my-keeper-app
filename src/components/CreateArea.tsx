@@ -1,15 +1,26 @@
 import React, { useState } from "react";
+import type { ChangeEvent, MouseEvent } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import Fab from "@mui/material/Fab";
 import Zoom from "@mui/material/Zoom";
 
-function CreateArea(props) {
-  const [note, setNote] = useState({
+interface Note {
+  title: string;
+  content: string;
+}
+
+interface CreateAreaProps {
+  onAdd: (note: Note) => void;
+}
+
+function CreateArea(props: CreateAreaProps) {
+  const [note, setNote] = useState<Note>({
     title: "",
     content: "",
   });
   const [isExpanded, setExpand] = useState(false);
-  function handleChange(event) {
+
+  function handleChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const { name, value } = event.target;
 
     setNote((prevNote) => {
@@ -20,14 +31,15 @@ function CreateArea(props) {
     });
   }
 
-  function submitNote(event) {
+  function submitNote(event: MouseEvent<HTMLButtonElement>) {
+    event.preventDefault();
     props.onAdd(note);
     setNote({
       title: "",
       content: "",
     });
-    event.preventDefault();
   }
+
   function expand() {
     setExpand(true);
   }

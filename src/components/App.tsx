@@ -4,16 +4,21 @@ import Footer from "./Footer";
 import Note from "./Note";
 import CreateArea from "./CreateArea";
 
-function App() {
-  const [notes, setNotes] = useState([]);
+interface Note{
+  title:string;
+  content:string;
+}
 
-  function addNote(newNote) {
+function App() {
+  const [notes, setNotes] = useState<Note[]>([]);
+
+  function addNote(newNote:Note) {
     setNotes(prevNotes => {
       return [...prevNotes, newNote];
     });
   }
 
-  function deleteNote(id) {
+  function deleteNote(id:number) {
     setNotes(prevNotes => {
       return prevNotes.filter((noteItem, index) => {
         return index !== id;
